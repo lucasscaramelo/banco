@@ -6,13 +6,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Cliente {
-    private Pessoa fisica;
-    private Pessoa juridica;
+    private String nome;
     private String cpfCnpj;
 
-    public Cliente(Pessoa f, Pessoa j, String cpfCnpj) {
-        this.fisica = f;
-        this.juridica = j;
+    public Cliente(String nome, String cpfCnpj) {
+        this.nome = nome;
         this.cpfCnpj = cpfCnpj;
     }
 
