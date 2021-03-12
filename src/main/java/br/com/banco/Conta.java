@@ -8,12 +8,13 @@ import lombok.Setter;
 public class Conta {
     public int numConta;
     protected String tipo;
-    private String dono;
+    private Cliente cliente;
     private float saldo;
     private Boolean status;
     private int valorTarifa;
 
-    public Conta() {
+    public Conta(Cliente c) {
+        this.cliente = c;
         this.saldo = 0;
         this.status = false;
         this.valorTarifa = 0;
@@ -44,7 +45,7 @@ public class Conta {
     public void depositar(float valor) {
         if (this.getStatus()) {
             this.setSaldo(this.getSaldo() + valor);
-            System.out.println("Depósito realizado na conta de "+this.getDono());
+            System.out.println("Depósito realizado na conta de "+this.getCliente());
         } else  {
             System.out.println("Não foi possível realizar o depósito em uma conta fechada.");
         }
@@ -54,7 +55,7 @@ public class Conta {
         if (this.getStatus()) {
             if (this.getSaldo() >= valor) {
                 this.setSaldo(this.getSaldo() - valor);
-                System.out.println("Saque realizado na conta de "+this.getDono());
+                System.out.println("Saque realizado na conta de "+this.getCliente());
             } else {
                 System.out.println("Saldo insuficiente para saque");
             }
