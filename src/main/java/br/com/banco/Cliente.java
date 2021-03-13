@@ -13,4 +13,12 @@ public class Cliente {
         this.nome = nome;
         this.cpfCnpj = cpfCnpj;
     }
+
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "nome='" + nome + '\'' +
+                ", cpfCnpj='" + cpfCnpj + '\'' +
+                '}';
+    }
 }
