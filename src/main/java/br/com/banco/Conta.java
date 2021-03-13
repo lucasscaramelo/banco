@@ -3,12 +3,15 @@ package br.com.banco;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Getter
 @Setter
 public class Conta {
+    private Cliente cliente;
     public int numConta;
     protected String tipo;
-    private Cliente cliente;
     private float saldo;
     private Boolean status;
     private int valorTarifa;
@@ -25,9 +28,13 @@ public class Conta {
         this.setStatus(true);
 
         if (tipoConta.equals("CC")) {
+            System.out.println("Conta Corrente aberta com sucesso!");
             this.setSaldo(50);
         }else if (tipoConta.equals("CP")) {
+            System.out.println("Conta Poupança aberta com sucesso!");
             this.setSaldo(150);
+        }else   {
+            System.out.println("Conta inválida");
         }
     }
 
@@ -45,7 +52,7 @@ public class Conta {
     public void depositar(float valor) {
         if (this.getStatus()) {
             this.setSaldo(this.getSaldo() + valor);
-            System.out.println("Depósito realizado na conta de "+this.getCliente());
+            System.out.println("Depósito realizado na conta de "+this.cliente.getNome());
         } else  {
             System.out.println("Não foi possível realizar o depósito em uma conta fechada.");
         }
@@ -55,13 +62,19 @@ public class Conta {
         if (this.getStatus()) {
             if (this.getSaldo() >= valor) {
                 this.setSaldo(this.getSaldo() - valor);
-                System.out.println("Saque realizado na conta de "+this.getCliente());
+                System.out.println("Saque realizado na conta de "+this.cliente.getNome());
             } else {
                 System.out.println("Saldo insuficiente para saque");
             }
         } else {
             System.out.println("Impossível sacar de uma conta fechada!");
         }
+    }
+
+    public void extrato() {
+        DateTimeFormatter data = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDateTime agora = LocalDateTime.now();
+        System.out.println("\nSeu saldo é de: "+this.getSaldo()+" \nData da operação: "+data.format(agora));
     }
 
     public void tarifaMensal() {
@@ -90,6 +103,18 @@ public class Conta {
         }else {
             System.out.println("Impossível pagar de uma conta fechada!");
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Conta{" +
+                "cliente=" + cliente +
+                ", numConta=" + numConta +
+                ", tipo='" + tipo + '\'' +
+                ", saldo=" + saldo +
+                ", status=" + status +
+                ", valorTarifa=" + valorTarifa +
+                '}';
     }
 }
 

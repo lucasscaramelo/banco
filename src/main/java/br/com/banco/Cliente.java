@@ -13,5 +13,4 @@ public class Cliente {
         this.nome = nome;
         this.cpfCnpj = cpfCnpj;
     }
-
 }
