@@ -23,30 +23,41 @@ public class Conta {
         this.valorTarifa = 0;
     }
 
-    public void abrirConta(String tipoConta) {
+    public String abrirConta(String tipoConta) {
+        String conta;
         this.setTipo(tipoConta);
         this.setStatus(true);
 
         if (tipoConta.equals("CC")) {
-            System.out.println("Conta Corrente aberta com sucesso!");
+            conta = "Conta Corrente aberta com sucesso!";
             this.setSaldo(50);
         }else if (tipoConta.equals("CP")) {
-            System.out.println("Conta Poupança aberta com sucesso!");
+            conta = "Conta Poupança aberta com sucesso!";
             this.setSaldo(150);
         }else   {
-            System.out.println("Conta inválida");
+            conta = "Conta inválida!";
         }
+
+        return conta;
     }
 
-    public void fecharConta() {
-        if (this.getSaldo() > 0){
-            System.out.println("Fechamento inválido!\nAinda existe saldo!");
-        }else if (this.getSaldo() < 0) {
-            System.out.println("Fechamento inválido!\nAinda existem débitos!");
+    public String fecharConta(String tipoConta) {
+        String conta;
+
+        if (tipoConta.equals("CC") || tipoConta.equals("CP")) {
+            if (this.getSaldo() > 0 ){
+                conta = "Fechamento inválido, ainda existe saldo!";
+            }else if (this.getSaldo() < 0 ) {
+                conta = "Fechamento inválido, ainda existem débitos!";
+            }else {
+                this.setStatus(false);
+                conta = "Conta fechada com sucesso!";
+            }
         }else {
-            this.setStatus(false);
-            System.out.println("Conta fechada com sucesso!");
+            conta = "Conta inválida!";
         }
+
+        return conta;
     }
 
     public void depositar(float valor) {
@@ -58,17 +69,21 @@ public class Conta {
         }
     }
 
-    public void sacar(float valor) {
+    public String sacar(float valor) {
+        String saque;
+
         if (this.getStatus()) {
             if (this.getSaldo() >= valor) {
                 this.setSaldo(this.getSaldo() - valor);
-                System.out.println("Saque realizado na conta de "+this.cliente.getNome());
+                saque = "Saque realizado na conta de "+this.cliente.getNome();
             } else {
-                System.out.println("Saldo insuficiente para saque");
+                saque = "Saldo insuficiente para saque";
             }
         } else {
-            System.out.println("Impossível sacar de uma conta fechada!");
+            saque = "Impossível sacar de uma conta fechada!";
         }
+
+        return saque;
     }
 
     public void extrato() {
